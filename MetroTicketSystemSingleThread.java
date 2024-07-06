@@ -1,34 +1,22 @@
-/*
-Project: A Metro Ticket Purchase System Could Handle Multiple Threads Request Implied by JVM ’s Concurrency Tools
-
-Program Function：
-Run program, there will be a window, input traveller's name, choose zone and time period, then, all information will be written into "tickets.txt".
-*/
-
- 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class MetroTicketSystem extends JFrame {
+public class MetroTicketSystemSingleThread extends JFrame {
     private JTextField nameField;
     private JComboBox<String> zoneComboBox;
     private JComboBox<String> passComboBox;
     private JButton purchaseButton;
     private JTextArea resultArea;
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    public MetroTicketSystem() {
+    public MetroTicketSystemSingleThread() {
         initializeUI();
     }
 
     private void initializeUI() {
-        setTitle("Metro Ticket Purchase System");
+        setTitle("Metro Ticket Purchase System - Single Threaded");
         setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -49,8 +37,8 @@ public class MetroTicketSystem extends JFrame {
         formPanel.add(passComboBox);
 
         purchaseButton = new JButton("Purchase Ticket");
+        purchaseButton.addActionListener(e -> handlePurchase());
         formPanel.add(purchaseButton);
-        purchaseButton.addActionListener(this::handlePurchase);
 
         resultArea = new JTextArea();
         resultArea.setEditable(false);
@@ -61,18 +49,16 @@ public class MetroTicketSystem extends JFrame {
         setVisible(true);
     }
 
-    private void handlePurchase(ActionEvent event) {
+    private void handlePurchase() {
         String name = nameField.getText();
         String zone = (String) zoneComboBox.getSelectedItem();
         String passType = (String) passComboBox.getSelectedItem();
 
-        executorService.submit(() -> {
-            int price = calculatePrice(zone, passType);
-            String result = String.format("Ticket purchased by %s for %s: %s with price $%d%n", name, zone, passType, price);
-            SwingUtilities.invokeLater(() -> resultArea.append(result));
+        int price = calculatePrice(zone, passType);
+        String result = String.format("Ticket purchased by %s for %s: %s with price $%d%n", name, zone, passType, price);
+        resultArea.append(result);
 
-            writeToLogFile(name, zone, passType, price);
-        });
+        writeToLogFile(name, zone, passType, price);
     }
 
     private int calculatePrice(String zone, String passType) {
@@ -91,8 +77,8 @@ public class MetroTicketSystem extends JFrame {
         };
     }
 
-    private synchronized void writeToLogFile(String name, String zone, String passType, int price) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("tickets_0.txt", true))) {
+    private void writeToLogFile(String name, String zone, String passType, int price) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("tickets_1.txt", true))) {
             writer.write(String.format("%s purchased a %s for %s with price $%d%n", name, passType, zone, price));
         } catch (IOException e) {
             System.err.println("Error writing to log file: " + e.getMessage());
@@ -103,3 +89,4 @@ public class MetroTicketSystem extends JFrame {
         SwingUtilities.invokeLater(MetroTicketSystem::new);
     }
 }
+
