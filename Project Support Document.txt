@@ -1,0 +1,63 @@
+Program Modules:
+
+	1.	User Interface Module:
+	•	Responsible for interacting with users, collecting user input information (such as name, ticketing area, and time).
+	•	Provides a graphical user interface (GUI), which can be implemented using Java’s Swing or JavaFX libraries.
+	•	Displays ticket price information and purchase buttons.
+	2.	Ticket Pricing Module:
+	•	Calculates ticket prices based on the input area and time type.
+	•	This module should be able to easily modify or add new pricing rules.
+	3.	Data Management Module:
+	•	Responsible for processing and storing all ticketing data.
+	•	Writes user ticketing information into a text file (such as a .txt file).
+	•	Manages file read and write operations to ensure data integrity and consistency.
+	4.	Concurrency Management Module:
+	•	Handles situations where multiple users purchase tickets simultaneously.
+	•	Uses Java’s concurrency tools, such as ExecutorService, to manage a thread pool, enhancing the system’s processing capability and efficiency.
+	•	Ensures that data conflicts or damage do not occur when multiple threads write to the file simultaneously.
+
+
+
+    (Chinese)：
+	1.	用户界面模块：
+	•	负责与用户交互，收集用户输入的信息（如姓名、购票区域和时间）。
+	•	提供图形用户界面（GUI），可以使用Java的Swing或JavaFX库来实现。
+	•	显示票价信息和购买按钮。
+	2.	票价计算模块：
+	•	根据输入的区域和时间类型计算票价。
+	•	这个模块应该能够轻松修改或添加新的票价规则。
+	3.	数据管理模块：
+	•	负责处理和存储所有的购票数据。
+	•	将用户购票信息写入到文本文件（如.txt文件）。
+	•	管理文件的读写操作，确保数据的完整性和一致性。
+	4.	并发管理模块：
+	•	处理多个用户同时购票的情况。
+	•	使用Java的并发工具，如ExecutorService，来管理线程池，提高系统的处理能力和效率。
+	•	确保当多个线程同时写文件时不会出现数据冲突或损坏。
+
+Key Idea of Project:
+
+Java's Concurrency Management
+
+Concurrency management in Java programs is closely linked to the Java Virtual Machine (JVM) and the host operating system. Here are several key points that illustrate these relationships:
+
+	1.	JVM Thread Management:
+	•	In Java, threads are directly mapped to native threads of the operating system. This means that the creation, scheduling, and management of Java threads depend significantly on the JVM’s implementation and its behavior on a specific operating system.
+	•	The JVM utilizes features provided by the operating system to manage threads, such as thread creation, priority setting, suspension, resumption, and termination. Therefore, the behavior of JVM threads can vary across different operating systems due to the differences in how these systems implement threads.
+	2.	Resource Limitations and Performance:
+	•	The JVM operates on top of the host operating system and is limited by the resources allocated by the OS, including CPU time and memory constraints. The concurrency performance of a Java program, such as the efficiency of context switching and the overhead of synchronization, is influenced by the characteristics of the operating system.
+	3.	Concurrency Tools and OS Capabilities:
+	•	Java’s concurrency APIs (like those in the java.util.concurrent package) are designed considering the characteristics of various operating systems to optimize performance and resource usage. For example, synchronization mechanisms such as ReentrantLock may leverage specific hardware optimizations or system calls on different platforms.
+	•	Low-level features provided by operating systems, such as atomic operations and memory barriers, are utilized by the JVM to implement Java’s synchronization and concurrency control mechanisms.
+	4.	Scalability and Portability:
+	•	Although Java is designed to be “write once, run anywhere,” the implementation of concurrent programming also needs to consider the consistency and predictability across platforms. However, different operating systems may result in different behaviors of the same Java concurrency program due to their thread management implementations.
+	•	Developers need to be aware of these differences, especially in applications that demand high performance or reliability, understanding the underlying system characteristics becomes critically important.
+
+Thus, Java’s ability to manage concurrency is not only constrained by the JVM’s implementation but is also profoundly influenced by the operating environment of the operating system. This interrelation ensures that Java programs can efficiently run across diverse hardware and operating systems while also posing challenges for cross-platform performance tuning.
+
+
+References:
+
+	1.	“On Analyzing Virtual Threads – a Structured Concurrency Model for Java Virtual Machine (JVM)” - This paper discusses the implementation of virtual threads in the JVM, which are lightweight and managed within the JVM, independent of operating system threads.
+	2.	“Java in the High Performance Computing arena: Research, practice and future trends” - This article explores how Java is used in high-performance computing, emphasizing multithreading and the JVM’s performance improvements.
+	3.	“Achieving Efficient Structured Concurrency through Virtual Threads in Java” - The paper covers contemporary concurrent server applications that use Java for high concurrency and efficiency under load.
