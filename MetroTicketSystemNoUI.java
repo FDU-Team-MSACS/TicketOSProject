@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 public class MetroTicketSystemNoUI {
     public static void main(String[] args) {
         String inputFile = "Input.txt"; 
-        ExecutorService executorService = Executors.newFixedThreadPool(10); 
+        ExecutorService executorService = Executors.newFixedThreadPool(4); 
         
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
             String line;

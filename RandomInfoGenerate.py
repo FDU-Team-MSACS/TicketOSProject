@@ -14,4 +14,4 @@ def generate_data(num_records, filename='operations.txt'):
             file.write(f"{name}, {zone}, {pass_type}\n")  # 写入文件
 
 if __name__ == '__main__':
-    generate_data(10000)  # 生成 10000 条记录
+    generate_data(1000000)  # 生成 10000 条记录
